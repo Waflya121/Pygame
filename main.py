@@ -1,27 +1,40 @@
 import pygame
 
-# Инициализация Pygame
 pygame.init()
 
-# Константы
-WIDTH, HEIGHT = 640, 480
+WIDTH, HEIGHT = 800, 600
 FPS = 60
 
-# Цвета
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
-RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
-# Создание экрана
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Галлага')
 clock = pygame.time.Clock()
 
-running = True
+# Корабль
+player = pygame.Rect(375, 520, 40, 25)
+speed = 6
 
+running = True
 while running:
-    pygame.event.get()
-    screen.fill(BLACK)
-    pygame.display.flip()
+    # СОБЫТИЯ
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    # Движение
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and player.left > 0:
+        player.x -= speed
+    if keys[pygame.K_RIGHT] and player.right < WIDTH:
+        player.x += speed
+    
+    # Отрисовка
+    screen.fill(BLACK)           # Очищаем экран
+    pygame.draw.rect(screen, GREEN, player)  # Рисуем корабль
+    pygame.display.flip()        # Показ на экране
     clock.tick(FPS)
+
+pygame.quit()
