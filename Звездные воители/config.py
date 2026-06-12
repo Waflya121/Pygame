@@ -1,0 +1,11 @@
+WIDTH = 800
+HEIGHT = 600
+FPS = 60
+TITLE = "Звездные воители"
+
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+
+PLAYER_START_SPEED = 5
+PLAYER_WIDTH = 50
+PLAYER_HEIGHT = 40
