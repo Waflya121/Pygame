@@ -1,16 +1,34 @@
+# Экран
 WIDTH = 800
 HEIGHT = 600
 FPS = 60
-TITLE = "Звездные воители"
+TITLE = "Звездные воители: Профессиональный рефакторинг"
 
+# Цвета (RGB)
 BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
+RED = (255, 0, 0)
 
+# Игрок
 PLAYER_START_SPEED = 5
 PLAYER_WIDTH = 50
 PLAYER_HEIGHT = 40
 
+# Пули
 BULLET_SPEED = 7
 BULLET_WIDTH = 5
 BULLET_HEIGHT = 15
+
+# Враги
+ENEMY_SPEED = 3
+ENEMY_MAX_CHAOS_X = 3
+ENEMY_WIDTH = 40
+ENEMY_HEIGHT = 40
+ENEMY_COUNT_IN_WAVE = 8
+
+# Сложность
+BASE_ATTACK_INTERVAL = 1200
+MIN_ATTACK_INTERVAL = 300
+WAVE_DIFFICULTY_STEP = 150
