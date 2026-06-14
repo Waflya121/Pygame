@@ -1,47 +1,38 @@
 import sys
-
 import pygame
+from config import WIDTH, HEIGHT, FPS, TITLE
+from game import Game
 
-from config import WIDTH, HEIGHT, FPS, TITLE, BLACK
-from player import Player
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption(TITLE)
+    clock = pygame.time.Clock()
 
-pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption(TITLE)
-clock = pygame.time.Clock()
+    game = Game(screen)
 
-player = Player()
-bullets = []
+    game.spawn_wave() 
 
-# Главный цикл игры
-running = True
-while running:
-    clock.tick(FPS)
+    running = True
+    while running:
+        clock.tick(FPS)
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        # Проверяем одиночное нажатие на Пробел
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                new_bullet = player.shoot()
-                bullets.append(new_bullet)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    new_bullet = game.player.shoot()
+                    game.bullets.append(new_bullet)
 
-    player.update()
+        game.update()
+        game.draw()
+        
+        pygame.display.flip()
 
-    for bullet in bullets[:]:
-        bullet.update()
-        if bullet.y < -bullet.height:
-            bullets.remove(bullet)
+    pygame.quit()
+    sys.exit()
 
-    screen.fill(BLACK)
-    player.draw(screen)
-
-    # Рисуем все пули
-    for bullet in bullets:
-        bullet.draw(screen)
-
-    pygame.display.flip()
-
-pygame.quit()
-sys.exit()
+if __name__ == "__main__":
+    main()
