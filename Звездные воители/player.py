@@ -1,6 +1,7 @@
 import pygame
 
 from config import WIDTH, HEIGHT, GREEN, PLAYER_START_SPEED, PLAYER_WIDTH, PLAYER_HEIGHT
+from bullet import Bullet
 
 
 class Player:
@@ -24,7 +25,6 @@ class Player:
         if keys[pygame.K_DOWN]:
             self.y += self.speed
 
-        # Ограничение движения границами экрана
         if self.x < 0:
             self.x = 0
         if self.x > WIDTH - self.width:
@@ -34,6 +34,11 @@ class Player:
             self.y = 0
         if self.y > HEIGHT - self.height:
             self.y = HEIGHT - self.height
+
+    def shoot(self):
+        bullet_x = self.x + self.width // 2
+        bullet_y = self.y
+        return Bullet(bullet_x, bullet_y)
 
     def draw(self, surface):
         pygame.draw.rect(
