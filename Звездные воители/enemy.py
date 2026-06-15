@@ -1,4 +1,5 @@
 import pygame
+import random
 from config import HEIGHT, ENEMY_SPEED, RED, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_RETURN_SPEED, ENEMY_SHOOT_CHANCE
 from bullet import EnemyBullet
 
