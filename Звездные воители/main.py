@@ -19,12 +19,15 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                pygame.quit()
+                sys.exit()
             
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    new_bullet = game.player.shoot()
-                    game.bullets.append(new_bullet)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and not game.is_game_over:
+                    game.bullets.append(game.player.shoot())
+                
+                if event.key == pygame.K_r and game.is_game_over:
+                    game.reset_game()
 
         game.update()
         game.draw()
