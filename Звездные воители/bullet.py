@@ -30,3 +30,6 @@ class EnemyBullet:
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, (self.x, self.y, self.width, self.height))
+        
+    def get_rect(self):
+        return pygame.Rect(self.x, self.y, self.width, self.height)
