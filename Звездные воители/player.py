@@ -1,46 +1,42 @@
 import pygame
-
-from config import WIDTH, HEIGHT, GREEN, PLAYER_START_SPEED, PLAYER_WIDTH, PLAYER_HEIGHT
-from bullet import Bullet
-
+from config import *
 
 class Player:
     def __init__(self):
         self.width = PLAYER_WIDTH
         self.height = PLAYER_HEIGHT
         self.x = WIDTH // 2 - self.width // 2
-        self.y = HEIGHT - self.height - 20
+        self.y = HEIGHT - 70
         self.speed = PLAYER_START_SPEED
-        self.color = GREEN
+        
+        self.is_invincible = False
+        self.invincible_timer = 0
+        self.invincibility_duration = 1500
+
+    def shoot(self):
+        from bullet import Bullet
+        return Bullet(self.x + self.width // 2, self.y)
+
+    def trigger_invincibility(self):
+        """Включает неуязвимость и запоминает время начала"""
+        self.is_invincible = True
+        self.invincible_timer = pygame.time.get_ticks()
 
     def update(self):
         keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and self.x > 0:
             self.x -= self.speed
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and self.x < WIDTH - self.width:
             self.x += self.speed
-        if keys[pygame.K_UP]:
-            self.y -= self.speed
-        if keys[pygame.K_DOWN]:
-            self.y += self.speed
 
-        if self.x < 0:
-            self.x = 0
-        if self.x > WIDTH - self.width:
-            self.x = WIDTH - self.width
-
-        if self.y < 0:
-            self.y = 0
-        if self.y > HEIGHT - self.height:
-            self.y = HEIGHT - self.height
-
-    def shoot(self):
-        bullet_x = self.x + self.width // 2
-        bullet_y = self.y
-        return Bullet(bullet_x, bullet_y)
+        if self.is_invincible:
+            now = pygame.time.get_ticks()
+            if now - self.invincible_timer > self.invincibility_duration:
+                self.is_invincible = False
 
     def draw(self, surface):
-        pygame.draw.rect(
-            surface, self.color, (self.x, self.y, self.width, self.height)
-        )
+        if self.is_invincible:
+            if (pygame.time.get_ticks() // 100) % 2 == 0:
+                return
+        
+        pygame.draw.rect(surface, GREEN, (self.x, self.y, self.width, self.height))
