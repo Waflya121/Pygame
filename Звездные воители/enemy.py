@@ -1,6 +1,7 @@
 import pygame
 import random
-from config import HEIGHT, ENEMY_SPEED, RED, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_RETURN_SPEED, ENEMY_SHOOT_CHANCE
+import assets
+from config import HEIGHT, ENEMY_SPEED, ENEMY_RETURN_SPEED, RED, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_SHOOT_CHANCE
 from bullet import EnemyBullet
 
 class Enemy:
@@ -11,7 +12,7 @@ class Enemy:
         self.x = start_x
         self.y = -self.height
         self.target_y = target_y
-        
+        self.image = assets.enemy_img
         self.current_dive_x = 0
         self.speed = ENEMY_SPEED
         self.return_speed = ENEMY_RETURN_SPEED
@@ -53,7 +54,7 @@ class Enemy:
                 self.y = min(self.y + self.speed, self.target_y)
 
     def draw(self, surface):
-        pygame.draw.rect(surface, self.color, (self.x, self.y, self.width, self.height))
+        surface.blit(self.image, (self.x, self.y))
 
     def get_rect(self):
         return pygame.Rect(self.x, self.y, self.width, self.height)
