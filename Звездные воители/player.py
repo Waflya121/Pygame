@@ -4,19 +4,18 @@ from config import *
 
 class Player:
     def __init__(self):
-        self.width = PLAYER_WIDTH
-        self.height = PLAYER_HEIGHT
-        self.x = WIDTH // 2 - self.width // 2
+        self.image = assets.player_img
+        self.rect = self.image.get_rect()
+        self.x = WIDTH // 2 - self.rect.width // 2
         self.y = HEIGHT - 70
         self.speed = PLAYER_START_SPEED
-        self.image = assets.player_img
         self.is_invincible = False
         self.invincible_timer = 0
         self.invincibility_duration = 3000
 
     def shoot(self):
         from bullet import Bullet
-        return Bullet(self.x + self.width // 2, self.y)
+        return Bullet(self.x + self.rect.width // 2, self.y)
 
     def trigger_invincibility(self):
         """Включает неуязвимость и запоминает время начала"""
@@ -27,7 +26,7 @@ class Player:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and self.x > 0:
             self.x -= self.speed
-        if keys[pygame.K_RIGHT] and self.x < WIDTH - self.width:
+        if keys[pygame.K_RIGHT] and self.x < WIDTH - self.rect.width:
             self.x += self.speed
 
         if self.is_invincible:
@@ -39,5 +38,9 @@ class Player:
         if self.is_invincible:
             if (pygame.time.get_ticks() // 100) % 2 == 0:
                 return
-        
+
         surface.blit(self.image, (self.x, self.y))
+    
+    def get_rect(self):
+        self.rect.topleft = (self.x, self.y)
+        return self.rect
