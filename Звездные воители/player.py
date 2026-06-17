@@ -11,7 +11,7 @@ class Player:
         
         self.is_invincible = False
         self.invincible_timer = 0
-        self.invincibility_duration = 1500
+        self.invincibility_duration = 3000
 
     def shoot(self):
         from bullet import Bullet
