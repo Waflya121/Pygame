@@ -44,14 +44,14 @@ class Game:
     def check_collisions(self):
         if self.is_game_over: return
 
-        p_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
+        p_rect = self.player.get_rect()
 
         # Пули игрока
         for e in self.enemies[:]:
             e_rect = e.get_rect()
             for b in self.bullets[:]:
                 if e_rect.colliderect(pygame.Rect(b.x, b.y, b.width, b.height)):
-                    self.explosions.append(vf.ExplosionCircle(e.x + 20, e.y + 20)) # Взрыв врага
+                    self.explosions.append(vf.ExplosionCircle(e_rect.centerx, e_rect.centery))
                     if b in self.bullets: self.bullets.remove(b)
                     if e in self.enemies: self.enemies.remove(e)
                     self.score += 10 + (self.wave_count - 1) * 10
