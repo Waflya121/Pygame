@@ -9,6 +9,8 @@ import vf
 class Game:
     def __init__(self, screen):
         self.screen = screen
+        self.bg_image = pygame.image.load("background.png").convert()
+        self.bg_image = pygame.transform.scale(self.bg_image, (WIDTH, HEIGHT))
         self.reset_game()
 
     def reset_game(self):
@@ -17,12 +19,13 @@ class Game:
         self.score = 0
         self.bullets = []
         self.enemy_bullets = []
+        self.bg_y = 0
+        self.bg_speed = 1
         self.enemies = []
         self.explosions = []
         self.wave_count = 0
         self.is_game_over = False
         self.last_attack_time = pygame.time.get_ticks()
-        self.spawn_wave()
 
     def spawn_wave(self):
         self.enemies.clear()
@@ -51,7 +54,7 @@ class Game:
                     self.explosions.append(vf.ExplosionCircle(e.x + 20, e.y + 20)) # Взрыв врага
                     if b in self.bullets: self.bullets.remove(b)
                     if e in self.enemies: self.enemies.remove(e)
-                    self.score += 100 + (self.wave_count - 1) * 10
+                    self.score += 10 + (self.wave_count - 1) * 10
                     break
 
         # Пули врагов
@@ -79,6 +82,10 @@ class Game:
 
     def update(self):
         if self.is_game_over: return
+        
+        self.bg_y += self.bg_speed
+        if self.bg_y >= HEIGHT:
+            self.bg_y = 0
 
         self.player.update()
         
@@ -101,11 +108,15 @@ class Game:
             eb.update()
             if eb.y > HEIGHT: self.enemy_bullets.remove(eb)
             
-        for e in self.enemies: e.update()
-        if not self.enemies: self.spawn_wave()
+        for e in self.enemies:
+            e.update()
+
+        if not self.enemies:
+            self.spawn_wave()
 
     def draw(self):
-        self.screen.fill(BLACK)
+        self.screen.blit(self.bg_image, (0, self.bg_y))
+        self.screen.blit(self.bg_image, (0, self.bg_y - HEIGHT))
         
         if not self.is_game_over:
             self.player.draw(self.screen)
