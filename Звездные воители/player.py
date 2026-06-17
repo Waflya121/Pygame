@@ -1,4 +1,5 @@
 import pygame
+import assets
 from config import *
 
 class Player:
@@ -8,7 +9,7 @@ class Player:
         self.x = WIDTH // 2 - self.width // 2
         self.y = HEIGHT - 70
         self.speed = PLAYER_START_SPEED
-        
+        self.image = assets.player_img
         self.is_invincible = False
         self.invincible_timer = 0
         self.invincibility_duration = 3000
@@ -39,4 +40,4 @@ class Player:
             if (pygame.time.get_ticks() // 100) % 2 == 0:
                 return
         
-        pygame.draw.rect(surface, GREEN, (self.x, self.y, self.width, self.height))
+        surface.blit(self.image, (self.x, self.y))
