@@ -1,5 +1,6 @@
 import pygame
 import random
+import assets
 from config import *
 from player import Player
 from enemy import Enemy
@@ -9,8 +10,7 @@ import vf
 class Game:
     def __init__(self, screen):
         self.screen = screen
-        self.bg_image = pygame.image.load("background.png").convert()
-        self.bg_image = pygame.transform.scale(self.bg_image, (WIDTH, HEIGHT))
+        self.bg_image = assets.bg_img
         self.reset_game()
 
     def reset_game(self):
