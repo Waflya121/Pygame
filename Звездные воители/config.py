@@ -1,3 +1,8 @@
+""" Модуль конфигурации игры.
+Содержит все глобальные константы, настройки экрана, скоростей,
+цветовых палитр и параметров баланса сложности.
+"""
+
 # Экран
 WIDTH = 1000
 HEIGHT = 700
@@ -31,7 +36,7 @@ ENEMY_SPEED = 4
 ENEMY_RETURN_SPEED = 10
 ENEMY_MAX_CHAOS_X = 3
 
-# Сложность
+# Прогрессия сложности
 BASE_ATTACK_INTERVAL = 1200
 MIN_ATTACK_INTERVAL = 300
 WAVE_DIFFICULTY_STEP = 150
