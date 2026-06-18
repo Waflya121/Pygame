@@ -85,7 +85,7 @@ class Game:
             for eb in self.enemy_bullets[:]:
                 if eb.get_rect().colliderect(p_rect):
                     # Создает эффект взрыва в центре коллизии
-                    self.explosions.append(vf.ExplosionCircle(self.player.x + 25, self.player.y + 20, (0, 255, 0)))
+                    self.explosions.append(vf.ExplosionCircle(self.player.x + 25, self.player.y + 20, GREEN))
                     
                     # Воспроизведение эффекта взрыва
                     if assets.explosion_snd:
@@ -101,7 +101,7 @@ class Game:
             for e in self.enemies[:]:
                 if e.get_rect().colliderect(p_rect):
                     # Создает эффект взрыва в центре коллизии
-                    self.explosions.append(vf.ExplosionCircle(e.x + 20, e.y + 20, (255, 0, 0)))
+                    self.explosions.append(vf.ExplosionCircle(e.x + 20, e.y + 20, RED))
                     
                     # Воспроизведение эффекта взрыва
                     if assets.explosion_snd:
