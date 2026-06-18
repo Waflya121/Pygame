@@ -1,6 +1,6 @@
 """ Модуль графического интерфейса пользователя (User Interface).
 Отвечает за отрисовку HUD (очки, жизни, волны) во время матча, а также
-статических экранов проигрыша.
+статических экранов проигрыша. Не содержит внутренней логики игры.
 """
 import pygame
 from config import WIDTH, HEIGHT, WHITE, RED, GREEN, YELLOW
@@ -17,15 +17,15 @@ def draw_hud(screen, lives, score, wave):
     
     screen.blit(l_text, (20, 20))
     screen.blit(s_text, (WIDTH - 180, 20))
-    screen.blit(w_text, (WIDTH // 2 - 40, 20))
+    screen.blit(w_text, (WIDTH // w_text.get_width() // 2, 20))
 
 def draw_game_over(screen, score):
     """Рисует экран окончания игры"""
     txt = font_big.render("GAME OVER", True, RED)
-    screen.blit(txt, (WIDTH // 2 - 160, HEIGHT // 2 - 50))
+    screen.blit(txt, (WIDTH // txt.get_width() // 2, HEIGHT // 2 - 50))
     
     score_txt = font_main.render(f"Final Score: {score}", True, WHITE)
-    screen.blit(score_txt, (WIDTH // 2 - 70, HEIGHT // 2 + 30))
+    screen.blit(score_txt, (WIDTH // txt.get_width() // 2, HEIGHT // 2 + 30))
     
     retry_txt = font_main.render("Press R to Restart", True, GREEN)
-    screen.blit(retry_txt, (WIDTH // 2 - 90, HEIGHT // 2 + 70))
+    screen.blit(retry_txt, (WIDTH // txt.get_width() // 2, HEIGHT // 2 + 70))
