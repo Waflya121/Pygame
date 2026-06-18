@@ -47,6 +47,9 @@ def main():
                     # Выстрел игрока по нажатию на пробел
                     if event.key == pygame.K_SPACE and not game.is_game_over:
                         game.bullets.append(game.player.shoot())
+                        # Воспроизведение звука выстрела
+                        if assets.laser_snd:
+                            assets.laser_snd.play()
                     # Перезапуск матча на клавишу R в случае Game Over
                     if event.key == pygame.K_r and game.is_game_over:
                         game.reset_game()
