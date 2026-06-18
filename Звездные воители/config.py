@@ -9,6 +9,11 @@ HEIGHT = 700
 FPS = 60
 TITLE = "Звездные воители"
 
+# Звук
+SOUND_VOLUME = 0.1
+MUSIC_VOLUME = 0.3
+ENEMY_SOUND_VOLUME = 0.1
+
 # Цвета (RGB)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
