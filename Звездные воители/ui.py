@@ -25,7 +25,7 @@ def draw_game_over(screen, score):
     screen.blit(txt, (WIDTH // 2 - txt.get_width() // 2, HEIGHT // 2 - 80))
     
     score_txt = font_main.render(f"Final Score: {score}", True, WHITE)
-    screen.blit(score_txt, (WIDTH // 2 - txt.get_width() // 2, HEIGHT // 2 + 10))
+    screen.blit(score_txt, (WIDTH // 2 - score_txt.get_width() // 2, HEIGHT // 2 + 10))
     
     retry_txt = font_main.render("Press R to Restart", True, GREEN)
-    screen.blit(retry_txt, (WIDTH // 2 - txt.get_width() // 2, HEIGHT // 2 + 50))
+    screen.blit(retry_txt, (WIDTH // 2 - retry_txt.get_width() // 2, HEIGHT // 2 + 50))
