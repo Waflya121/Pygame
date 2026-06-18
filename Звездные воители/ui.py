@@ -1,3 +1,7 @@
+""" Модуль графического интерфейса пользователя (User Interface).
+Отвечает за отрисовку HUD (очки, жизни, волны) во время матча, а также
+статических экранов проигрыша.
+"""
 import pygame
 from config import WIDTH, HEIGHT, WHITE, RED, GREEN, YELLOW
 
