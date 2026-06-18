@@ -35,6 +35,8 @@ class Game:
         self.last_attack_time = pygame.time.get_ticks()
         # Хранилище текущего интервала атак (Изменяется с ростом сложности)
         self.attack_interval = BASE_ATTACK_INTERVAL
+        # Запускаем фоновую музыку по кругу
+        pygame.mixer.music.play(-1)
 
     def spawn_wave(self):
         """Формирует новую волну противников в виде ровной сетки матрицы."""
@@ -67,6 +69,11 @@ class Game:
                 if e_rect.colliderect(pygame.Rect(b.x, b.y, b.width, b.height)):
                     # Создает эффект взрыва в центре коллизии
                     self.explosions.append(vf.ExplosionCircle(e_rect.centerx, e_rect.centery))
+                    
+                    # Воспроизведение эффекта взрыва
+                    if assets.explosion_snd:
+                        assets.explosion_snd.play()
+
                     if b in self.bullets: self.bullets.remove(b)
                     if e in self.enemies: self.enemies.remove(e)
                     # Начисление очков с бонусом за номер текущей волны
@@ -77,8 +84,13 @@ class Game:
         if not self.player.is_invincible:
             for eb in self.enemy_bullets[:]:
                 if eb.get_rect().colliderect(p_rect):
-                    # Тот же эффект взрыва
+                    # Создает эффект взрыва в центре коллизии
                     self.explosions.append(vf.ExplosionCircle(self.player.x + 25, self.player.y + 20, (0, 255, 0)))
+                    
+                    # Воспроизведение эффекта взрыва
+                    if assets.explosion_snd:
+                        assets.explosion_snd.play()
+                        
                     self.enemy_bullets.remove(eb)
                     self.lives -= 1
                     self.player.trigger_invincibility()
@@ -88,8 +100,13 @@ class Game:
         if not self.player.is_invincible:
             for e in self.enemies[:]:
                 if e.get_rect().colliderect(p_rect):
-                    # Тот же эффект взрыва
+                    # Создает эффект взрыва в центре коллизии
                     self.explosions.append(vf.ExplosionCircle(e.x + 20, e.y + 20, (255, 0, 0)))
+                    
+                    # Воспроизведение эффекта взрыва
+                    if assets.explosion_snd:
+                        assets.explosion_snd.play()
+                    
                     self.enemies.remove(e)
                     self.lives -= 1
                     self.player.trigger_invincibility()
@@ -98,6 +115,7 @@ class Game:
         # Проверка условия поражения
         if self.lives <= 0:
             self.is_game_over = True
+            pygame.mixer.music.stop() # Отключаем звук при GAME OVER
 
     def update(self):
         """Обновляет физику и состояния всех объектов."""
@@ -122,16 +140,22 @@ class Game:
         for e in self.enemies:
             e.update()
             eb = e.shoot()
-            if eb: self.enemy_bullets.append(eb)
+            if eb:
+                self.enemy_bullets.append(eb)
+                # Если враг выстрелил — запускаем звук из ассетов
+                if assets.enemy_laser_snd:
+                    assets.enemy_laser_snd.play()
         
         # Движение снарядов игрока с очисткой памяти при вылете за экран
         for b in self.bullets[:]:
             b.update()
-            if b.y < 0: self.bullets.remove(b)
+            if b.y < 0:
+                self.bullets.remove(b)
             
         for eb in self.enemy_bullets[:]:
             eb.update()
-            if eb.y > HEIGHT: self.enemy_bullets.remove(eb)
+            if eb.y > HEIGHT:
+                self.enemy_bullets.remove(eb)
 
         # Проверяем столкновения после того, как все объекты обновили свои позиции
         self.check_collisions()
